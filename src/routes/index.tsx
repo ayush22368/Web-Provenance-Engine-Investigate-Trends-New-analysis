@@ -16,7 +16,7 @@ const EXAMPLES: Record<Mode, string[]> = {
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => ({
-    mode: (search.mode === "trend" ? "trend" : "claim") as Mode,
+    mode: (search["mode"] === "trend" ? "trend" : "claim") as Mode,
   }),
   head: () => ({
     meta: [

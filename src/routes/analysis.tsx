@@ -21,7 +21,7 @@ export const Route = createFileRoute("/analysis")({
         name: "description",
         content: "Evidence analysis, source independence, provenance lineage, and information echo detection.",
       },
-      { property: "og:title", content: `Analysis: ${search.q ?? ""}` },
+      { property: "og:title", content: "Analysis — Web Provenance Engine" },
       { property: "og:description", content: "Evidence intelligence from Web Provenance Engine." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -51,6 +51,7 @@ function AnalysisPage() {
           <p className="mt-3 text-muted-foreground">Enter a claim or trend on the homepage to begin.</p>
           <Link
             to="/"
+            search={{ mode: "claim" }}
             className="mt-8 inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
           >
             Start an analysis
