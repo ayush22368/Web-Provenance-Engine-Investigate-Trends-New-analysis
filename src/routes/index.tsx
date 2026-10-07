@@ -40,10 +40,10 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { mode: initialMode } = Route.useSearch();
-  const [mode, setMode] = useState<Mode>(initialMode);
+  const { mode } = Route.useSearch();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
+  const setMode = (m: Mode) => navigate({ to: "/", search: { mode: m } });
 
   const submit = (q: string) => {
     const value = q.trim();

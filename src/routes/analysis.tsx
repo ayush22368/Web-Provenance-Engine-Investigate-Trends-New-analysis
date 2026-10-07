@@ -216,6 +216,32 @@ function AnalysisPage() {
           </div>
         )}
 
+        {/* Final conclusion */}
+        {claim && (
+          <section
+            className="glass-panel animate-rise mt-5 p-6 text-center"
+            style={{ animationDelay: "460ms" }}
+          >
+            <div className="text-xs font-medium uppercase tracking-[0.16em] text-muted-foreground">
+              Final conclusion
+            </div>
+            <p className="mx-auto mt-3 max-w-2xl text-pretty font-display text-xl font-bold leading-relaxed tracking-tight sm:text-2xl">
+              {claim.verdict === "Mostly Supported" &&
+                "This claim appears to be valid — most credible sources agree with it."}
+              {claim.verdict === "Partially Supported" &&
+                "This claim is partly valid — some sources agree, but others disagree or add conditions."}
+              {claim.verdict === "Contradicted" &&
+                "This claim appears to be false — the stronger evidence says it is wrong."}
+              {claim.verdict === "Insufficient Evidence" &&
+                "There is not enough evidence to say if this claim is valid or not."}
+            </p>
+            <p className="mx-auto mt-2 max-w-xl text-xs leading-relaxed text-muted-foreground">
+              Based on {claim.totalResults} live sources ({claim.independentCount} independent). Always
+              check the original sources before sharing.
+            </p>
+          </section>
+        )}
+
         {/* Sources analyzed */}
         <section className="glass-panel animate-rise mt-5 p-6" style={{ animationDelay: "480ms" }}>
           <div className="flex flex-wrap items-center justify-between gap-2">

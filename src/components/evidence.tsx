@@ -76,9 +76,18 @@ export function EvidenceColumn({ stance, sources }: { stance: Stance; sources: E
       </div>
       <p className="-mt-2 mb-3 text-[11px] leading-snug text-muted-foreground">{s.hint}</p>
       <div className="space-y-3">
-        {sources.slice(0, 3).map((src, i) => (
-          <EvidenceCard key={src.id} source={src} delay={i * 120} />
-        ))}
+        {sources.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border p-5 text-center">
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              {stance === "supporting" && "No sources clearly support this claim yet."}
+              {stance === "contradicting" &&
+                "No source disagreed with this claim — nothing found that says it is wrong."}
+              {stance === "neutral" && "No neutral or background sources found."}
+            </p>
+          </div>
+        ) : (
+          sources.slice(0, 3).map((src, i) => <EvidenceCard key={src.id} source={src} delay={i * 120} />)
+        )}
       </div>
     </section>
   );
