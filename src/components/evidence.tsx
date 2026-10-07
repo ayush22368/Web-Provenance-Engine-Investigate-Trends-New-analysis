@@ -1,19 +1,22 @@
 import type { EvidenceSource, Stance } from "@/lib/demo-analysis";
 import { cn } from "@/lib/utils";
 
-const stanceStyles: Record<Stance, { label: string; text: string; chip: string }> = {
+const stanceStyles: Record<Stance, { label: string; hint: string; text: string; chip: string }> = {
   supporting: {
     label: "Supporting",
+    hint: "Sources that say the claim is true",
     text: "text-support",
     chip: "bg-support/15 text-support ring-support/30",
   },
   contradicting: {
     label: "Contradicting",
+    hint: "Sources that say the claim is wrong or false — 0 means no source disagreed",
     text: "text-contra",
     chip: "bg-contra/15 text-contra ring-contra/30",
   },
   neutral: {
     label: "Neutral / Context",
+    hint: "Related sources with no clear position",
     text: "text-neut",
     chip: "bg-secondary text-muted-foreground ring-border",
   },
@@ -71,6 +74,7 @@ export function EvidenceColumn({ stance, sources }: { stance: Stance; sources: E
         <h3 className={cn("text-sm font-semibold", s.text)}>{s.label}</h3>
         <span className="font-mono text-[11px] text-muted-foreground">{sources.length} sources</span>
       </div>
+      <p className="-mt-2 mb-3 text-[11px] leading-snug text-muted-foreground">{s.hint}</p>
       <div className="space-y-3">
         {sources.slice(0, 3).map((src, i) => (
           <EvidenceCard key={src.id} source={src} delay={i * 120} />
