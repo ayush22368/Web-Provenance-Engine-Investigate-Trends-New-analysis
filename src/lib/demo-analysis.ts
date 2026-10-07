@@ -87,7 +87,7 @@ function hash(s: string): number {
   return Math.abs(h);
 }
 function pick<T>(arr: T[], seed: number, i: number): T {
-  return arr[(seed + i * 7919) % arr.length];
+  return arr[(seed + i * 7919) % arr.length]!;
 }
 
 const SOURCE_POOL: { name: string; type: SourceType; cred: number }[] = [
@@ -126,7 +126,8 @@ const NEUTRAL_WHY = [
 function makeSources(seed: number, query: string): EvidenceSource[] {
   const stances: Stance[] = ["supporting", "contradicting", "neutral"];
   const sources: EvidenceSource[] = SOURCE_POOL.map((s, i) => {
-    const stance = stances[(seed + i) % 3 === 0 ? 0 : (seed + i) % 3 === 1 ? 2 : (i % 4 === 3 ? 1 : 0)];
+    const stance: Stance =
+      (seed + i) % 3 === 0 ? "supporting" : (seed + i) % 3 === 1 ? "neutral" : i % 4 === 3 ? "contradicting" : "supporting";
     const independent = i < 5 || (seed + i) % 5 === 0;
     const why =
       stance === "supporting"

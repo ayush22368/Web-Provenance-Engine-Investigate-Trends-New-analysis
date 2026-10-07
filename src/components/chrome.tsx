@@ -16,14 +16,14 @@ export function BackgroundFX() {
 export function Header() {
   return (
     <header className="relative z-10 flex items-center justify-between px-6 py-6 md:px-12">
-      <Link to="/" className="flex items-center gap-3">
+      <Link to="/" search={{ mode: "claim" }} className="flex items-center gap-3">
         <div className="grid size-9 place-items-center rounded-lg bg-primary font-display text-lg font-bold text-primary-foreground">
           W
         </div>
         <span className="font-display text-lg font-bold tracking-tight">Web Provenance Engine</span>
       </Link>
       <nav className="hidden items-center gap-8 text-sm text-muted-foreground md:flex">
-        <Link to="/" className="transition hover:text-foreground">
+        <Link to="/" search={{ mode: "claim" }} className="transition hover:text-foreground">
           Investigate
         </Link>
         <Link to="/" search={{ mode: "trend" }} className="transition hover:text-foreground">
