@@ -6,6 +6,7 @@ import { EvidenceColumn, Meter, StatCard, EvidenceCard } from "@/components/evid
 import { ProvenanceGraph } from "@/components/provenance";
 import { TrendTimeline, TrendOrigin, AmplificationChain } from "@/components/trend";
 import { analyzeClaim, analyzeTrend } from "@/lib/live-analysis.functions";
+import type { ClaimAnalysis, TrendAnalysis } from "@/lib/demo-analysis";
 import { cn } from "@/lib/utils";
 
 type Mode = "claim" | "trend";
@@ -48,7 +49,10 @@ function AnalysisPage() {
     enabled: !!q,
     staleTime: 5 * 60_000,
     retry: false,
-    queryFn: () => (mode === "claim" ? runClaim({ data: { q } }) : runTrend({ data: { q } })),
+    queryFn: async (): Promise<ClaimAnalysis | TrendAnalysis> =>
+      mode === "claim"
+        ? ((await runClaim({ data: { q } })) as ClaimAnalysis)
+        : ((await runTrend({ data: { q } })) as TrendAnalysis),
   });
 
   const claim = query.data?.mode === "claim" ? query.data : null;
