@@ -18,7 +18,7 @@ interface RawResult {
 }
 
 async function serp(params: Record<string, string>): Promise<{ results: RawResult[]; total: number }> {
-  const key = process.env.SERPAPI_API_KEY;
+  const key = process.env["SERPAPI_API_KEY"];
   if (!key) throw new Error("Search key is not configured");
   const url = new URL("https://serpapi.com/search.json");
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);

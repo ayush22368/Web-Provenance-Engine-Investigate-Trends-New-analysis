@@ -55,8 +55,9 @@ function AnalysisPage() {
         : ((await runTrend({ data: { q } })) as TrendAnalysis),
   });
 
-  const claim = query.data?.mode === "claim" ? query.data : null;
-  const trend = query.data?.mode === "trend" ? query.data : null;
+  const result = query.data;
+  const claim = result && result.mode === "claim" ? result : null;
+  const trend = result && result.mode === "trend" ? result : null;
 
   if (q && (query.isPending || query.isError)) {
     return (
