@@ -416,9 +416,7 @@ Web Provenance Engine could eventually be expanded to support:
 
 [https://web-provenance-engine.lovable.app](https://web-provenance-engine.lovable.app )
 
-### Source Code
 
-<!-- Add your GitHub repository URL here. -->
 
 ## Built for SerpApi India Hackathon 2026
 
