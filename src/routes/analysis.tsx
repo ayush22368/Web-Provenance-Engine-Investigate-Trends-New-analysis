@@ -56,8 +56,8 @@ function AnalysisPage() {
   });
 
   const result = query.data;
-  const claim = result && result.mode === "claim" ? result : null;
-  const trend = result && result.mode === "trend" ? result : null;
+  const claim = result && result.mode === "claim" ? (result as ClaimAnalysis) : null;
+  const trend = result && result.mode === "trend" ? (result as TrendAnalysis) : null;
 
   if (q && (query.isPending || query.isError)) {
     return (
