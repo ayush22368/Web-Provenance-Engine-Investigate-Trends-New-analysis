@@ -10,7 +10,7 @@ const kindTone: Record<ProvenanceNode["kind"], string> = {
 };
 
 export function ProvenanceGraph({ nodes }: { nodes: ProvenanceNode[] }) {
-  const [selected, setSelected] = useState<ProvenanceNode>(nodes[0]);
+  const [selected, setSelected] = useState<ProvenanceNode>(nodes[0]!);
 
   return (
     <section className="glass-panel animate-rise p-6" style={{ animationDelay: "350ms" }}>

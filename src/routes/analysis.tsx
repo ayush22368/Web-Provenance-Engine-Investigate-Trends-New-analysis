@@ -11,12 +11,12 @@ type Mode = "claim" | "trend";
 
 export const Route = createFileRoute("/analysis")({
   validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search.q === "string" ? search.q : "",
-    mode: (search.mode === "trend" ? "trend" : "claim") as Mode,
+    q: typeof search["q"] === "string" ? (search["q"] as string) : "",
+    mode: (search["mode"] === "trend" ? "trend" : "claim") as Mode,
   }),
-  head: ({ search }) => ({
+  head: () => ({
     meta: [
-      { title: `Analysis: ${search.q ?? ""} — Web Provenance Engine` },
+      { title: "Analysis — Web Provenance Engine" },
       {
         name: "description",
         content: "Evidence analysis, source independence, provenance lineage, and information echo detection.",

@@ -32,6 +32,7 @@ export function Header() {
       </nav>
       <Link
         to="/"
+        search={{ mode: "claim" }}
         className="rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
       >
         New analysis
