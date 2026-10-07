@@ -23,7 +23,7 @@ export interface EvidenceSource {
   credibility: number; // 0..1
   stance: Stance;
   independent: boolean;
-  originId?: string; // id of the source it derives from
+  originId?: string | undefined; // id of the source it derives from
   url: string;
   date: string;
 }
