@@ -168,7 +168,7 @@ function provenanceOf(sources: EvidenceSource[]): ProvenanceNode[] {
 }
 
 export const analyzeClaim = createServerFn({ method: "POST" })
-  .inputValidator((d: { q: string }) => ({ q: String(d.q).slice(0, 300) }))
+  .validator((d: { q: string }) => ({ q: String(d.q).slice(0, 300) }))
   .handler(async ({ data }): Promise<ClaimAnalysis> => {
     const { results, total } = await serp({ engine: "google", q: data.q, num: "20" });
     const sources = toSources(results, data.q);
@@ -213,7 +213,7 @@ function parseDate(s: string): number {
 }
 
 export const analyzeTrend = createServerFn({ method: "POST" })
-  .inputValidator((d: { q: string }) => ({ q: String(d.q).slice(0, 300) }))
+  .validator((d: { q: string }) => ({ q: String(d.q).slice(0, 300) }))
   .handler(async ({ data }): Promise<TrendAnalysis> => {
     const [news, web] = await Promise.all([
       serp({ engine: "google_news", q: data.q }).catch(() => ({ results: [], total: 0 })),
