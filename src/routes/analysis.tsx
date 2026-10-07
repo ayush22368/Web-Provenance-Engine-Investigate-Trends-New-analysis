@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { Shell } from "@/components/chrome";
 import { EvidenceColumn, Meter, StatCard, EvidenceCard } from "@/components/evidence";
 import { ProvenanceGraph } from "@/components/provenance";
 import { TrendTimeline, TrendOrigin, AmplificationChain } from "@/components/trend";
-import { generateAnalysis, generateTrend } from "@/lib/demo-analysis";
+import { analyzeClaim, analyzeTrend } from "@/lib/live-analysis.functions";
 import { cn } from "@/lib/utils";
 
 type Mode = "claim" | "trend";
@@ -39,9 +40,46 @@ const verdictTone: Record<string, string> = {
 
 function AnalysisPage() {
   const { q, mode } = Route.useSearch();
+  const runClaim = useServerFn(analyzeClaim);
+  const runTrend = useServerFn(analyzeTrend);
 
-  const claim = useMemo(() => (mode === "claim" && q ? generateAnalysis(q) : null), [q, mode]);
-  const trend = useMemo(() => (mode === "trend" && q ? generateTrend(q) : null), [q, mode]);
+  const query = useQuery({
+    queryKey: ["analysis", mode, q],
+    enabled: !!q,
+    staleTime: 5 * 60_000,
+    retry: false,
+    queryFn: () => (mode === "claim" ? runClaim({ data: { q } }) : runTrend({ data: { q } })),
+  });
+
+  const claim = query.data?.mode === "claim" ? query.data : null;
+  const trend = query.data?.mode === "trend" ? query.data : null;
+
+  if (q && (query.isPending || query.isError)) {
+    return (
+      <Shell>
+        <main className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
+          {query.isPending ? (
+            <>
+              <div className="mx-auto size-10 animate-spin rounded-full border-2 border-accent/30 border-t-accent" />
+              <h1 className="mt-6 font-display text-2xl font-bold">Tracing sources across the web…</h1>
+              <p className="mt-2 text-muted-foreground">Gathering evidence and mapping where it came from.</p>
+            </>
+          ) : (
+            <>
+              <h1 className="font-display text-2xl font-bold">The search couldn’t be completed</h1>
+              <p className="mt-2 text-muted-foreground">{(query.error as Error).message}</p>
+              <button
+                onClick={() => query.refetch()}
+                className="mt-8 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:brightness-110"
+              >
+                Try again
+              </button>
+            </>
+          )}
+        </main>
+      </Shell>
+    );
+  }
 
   if (!q) {
     return (
